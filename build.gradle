@@ -1,0 +1,57 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+	dependencies {
+		classpath 'com.google.protobuf:protobuf-gradle-plugin:0.7.7'
+	}
+}
+
+ext {
+	protobufVersion = '3.2.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.google.protobuf'
+apply plugin: 'org.springframework.boot'
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+protobuf {
+	// Configure the protoc executable
+	protoc {
+		// Download from repositories
+		artifact = "com.google.protobuf:protoc:${protobufVersion}"
+	}
+	generatedFilesBaseDir = "$projectDir/generated-code/proto"
+}
+
+
+idea {
+	module {
+		sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/java");
+		sourceDirs += file("${protobuf.generatedFilesBaseDir}/test/java");
+	}
+}
+
+dependencies {
+	// https://mvnrepository.com/artifact/com.googlecode.protobuf-java-format/protobuf-java-format
+	compile group: 'com.googlecode.protobuf-java-format', name: 'protobuf-java-format', version: '1.4'
+
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("com.google.protobuf:protobuf-java:${protobufVersion}")
+	compile("com.google.protobuf:protobuf-java-util:${protobufVersion}")
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}

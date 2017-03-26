@@ -1,0 +1,20 @@
+syntax = "proto3";
+option java_package = "com.yetanotherdevblog.models";
+package com.yetanotherdevblog.models;
+
+import "com/yetanotherdevblog/models/Timing.proto";
+
+message Recipe {
+
+    // pageref [string, unique, optional] - Reference to the parent page. Leave out this field if the application does not support grouping by pages.
+    string pageref = 1;
+
+    // time [number] - Total elapsed time of the request in milliseconds. This is the sum of all timings available in the timings object (i.e. not including -1 values) .
+    int32 time = 2;
+
+    repeated models.Timing timings = 3;
+
+    int64 someLongValue = 4;
+
+}
+

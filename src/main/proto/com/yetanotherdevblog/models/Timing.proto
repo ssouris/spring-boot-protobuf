@@ -1,0 +1,32 @@
+syntax = "proto3";
+option java_package = "com.yetanotherdevblog.models";
+package com.yetanotherdevblog.models;
+
+// This object describes various phases within request-response round trip. All times are specified in milliseconds.
+message Timing {
+
+    // blocked [number, optional] - Time spent in a queue waiting for a network connection. Use -1 if the timing does not apply to the current request.
+    int32 blocked = 1;
+
+    // dns [number, optional] - DNS resolution time. The time required to resolve a host name. Use -1 if the timing does not apply to the current request.
+    int32 dns = 2;
+
+    // connect [number, optional] - Time required to create TCP connection. Use -1 if the timing does not apply to the current request.
+    int32 connect = 3;
+
+    // send [number] - Time required to send HTTP request to the server.
+    int32 send = 4;
+
+    // wait [number] - Waiting for a response from the server.
+    int32 wait = 5;
+
+    // receive [number] - Time required to read entire response from the server (or cache).
+    int32 receive = 6;
+
+    // ssl [number, optional] (new in 1.2) - Time required for SSL/TLS negotiation. If this field is defined then the time is also included in the connect field (to ensure backward compatibility with HAR 1.1). Use -1 if the timing does not apply to the current request.
+    int32 ssl = 7;
+
+    // comment [string, optional] (new in 1.2) - A comment provided by the user or the application.
+    string comment = 8;
+
+}
